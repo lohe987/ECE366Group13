@@ -1,0 +1,72 @@
+01000001  #r0 = 1
+00010010  #0x2 = 1
+10010101  #holds sum of numbers for sum loop
+11000101 #r0 = 5
+10010011  #0x3 = 5, loop counter for sum
+11001111 #r0 = 15
+10000100  #r1 = r0 = 15
+01000010 #r0 = 2
+10000001 #r0 = 17
+00010100 #0x4 = 17, loop counter for mod
+11010001 #r0 = -15
+00000000 #r1 = 0
+00011000 #r0 = P
+10010110 #0x6 = P, will be the loop counter
+11010001 #r0 = -15
+10000100 #r1 = r0 = -15
+11011110 #r0 = -2
+10000001 #r0 = -17
+00010111 #0x7 = -17
+11001111 #r0 = 15
+10000100 #r1 = 0
+00011110 #r0 = P (where P is decremented)  !LOOP JUMP LOCATION
+01101111 #imm will be the number to reach end
+00011011 #r0 = value in 0x3 !SUM JUMP LOCATION
+01101111 #imm = number to reach mod
+00011101 #r0 = value of 0x5
+10000100 #r1 = r0 = value of 0x5
+10011010 #r0 = value of 0x2
+10000001 #r0 = r0 + r1
+10010101 #0x5 = r0
+11000000 #in order to reset r1 to 0
+10000100 #r1 = 0  ! INCORRECT
+00011011 #r0 = value of 0x3
+10000100 #r1 = r0 = 0x3
+01011111 #r0 = -1
+10000001 #r0 = r0 + r1
+10010011 #0x3 = r0
+11000000 #r0 = 0
+01110001 #imm would be number to reach sum
+11000000 #r0 = 0, in order to reset r1 to 0 ! MOD JUMP LOCATION
+10000100 #r1 = 0 ! INCORRECT
+00011101 #r0 = value of 0x5
+10000100 #r1 = value of 0x5
+10011100 #r0 = value of 0x4
+00001100 #r1 = r1<r0
+01101010 #jump to lower
+11000000 #r0 = 0, in order to reset r1 to 0
+10000100 #r1 = 0 !NEED FIX
+00011101 #r0 = value of 0x5
+10000100 #r1 = value of 0x5
+10011111 #r0 = -17
+10000001 #r0 = - 17 + r1
+10010101 #0x5 = r0
+11000000 #r0 = 0
+01110001 #imm is the number to reach mod
+11000000  #r0 = 0, in order to reset r1 to 0 ! LOWER JUMP LOCATION
+10000100  #r1 = 0 !NEED FIX
+01011111  #r0 = -1
+10000100  #r1 = r0
+00011110  #r0 = value of 0x6
+10000001  #r0 = r0 - 1
+10010110  #0x6 = r0
+11000101  #r0 = 5
+10010011  #0x3 = r0
+00011101  #r0 = value of 0x5
+00010010  #0x2 = r0
+11000000  #r0 = 0
+01110000  #imm is number to reach loop
+00011101  #r0 = value of 0x5 ! END JUMP LOCATION
+00010001  #0x1 = r0
+11000000  #r0 = 0 ! EXIT JUMP LOCATION
+11100010  #imm is the number to reach exit (2 instructions back because of pc + 1)
