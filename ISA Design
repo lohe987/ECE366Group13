@@ -1,3 +1,10 @@
+ISA NAME=> Name
+
+Registers used=> 4
+
+Memory=> 16 bit data with is taged to an integer
+
+Instructions=>
 init imm
 	MC: P|1 0|I I I I I
 	*Note: Always initializes register zero ($r0 = imm)
