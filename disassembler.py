@@ -17,7 +17,7 @@ print("___________")
 
 input_file = open("ISA_machine_code.txt", "r")
 output_file = open("ISA_assembly.txt","w")
-output_file.write("STARTED")
+
 disassembled = [None] * 3
 for line in input_file:
     if (line == "\n"):              # empty lines ignored
