@@ -34,7 +34,11 @@ for line in input_file:
 
         #Disassembling it to: init imm
         disassembled[0]  = "init "
-        imm = str(int(format(int(binaryInput[2], 2))))
+        if(binaryInput[2][0] == '1'):
+            binaryInput[2] = -32 + int(format(int(binaryInput[2], 2)))
+            imm = str(int(binaryInput[2]))
+        else:
+            imm = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = imm + "\n"
        
         print(disassembled[0] + disassembled[1])
@@ -46,7 +50,11 @@ for line in input_file:
 
         # Disassembling it to: bez imm
         disassembled[0] = "bez "
-        imm = str(int(format(int(binaryInput[2], 2))))
+        if(binaryInput[2][0] == '1'):
+            binaryInput[2] = -32 + int(format(int(binaryInput[2], 2)))
+            imm = str(int(binaryInput[2]))
+        else:
+            imm = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = imm + "\n"
 
         print(disassembled[0] + disassembled[1])
@@ -84,7 +92,7 @@ for line in input_file:
         # Splitting the line to: P|0 0 1 1|I I I
         binaryInput = [line[0], line[1:5], line[5:8]]
 
-        # Disassembling it to: lw imm
+        # Disassembling it to: lw imm (unsigned)
         disassembled[0] = "lw "
         imm = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = imm + "\n"
@@ -96,7 +104,7 @@ for line in input_file:
         # Splitting the line to: P|0 0 1 0|I I I
         binaryInput = [line[0], line[1:5], line[5:8]]
 
-        # Disassembling it to: sw imm
+        # Disassembling it to: sw imm (unsigned)
         disassembled[0] = "sw "
         imm = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = imm + "\n"
@@ -156,6 +164,6 @@ for line in input_file:
     else:
         print("Unknown instruction:"+line)
 
-input_file.close()w
+input_file.close()
 output_file.close()
 
