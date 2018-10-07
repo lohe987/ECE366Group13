@@ -17,7 +17,7 @@ print("___________")
 
 input_file = open("ISA_machine_code.txt", "r")
 output_file = open("ISA_assembly.txt","w")
-
+output_file.write("STARTED")
 disassembled = [None] * 3
 for line in input_file:
     if (line == "\n"):              # empty lines ignored
@@ -26,12 +26,11 @@ for line in input_file:
     line = line.replace("\n","")    # remove 'endline' character
     print("Instr: ", line)          # show the binary instruction to screen
     line = line.replace(" ","")     # remove spaces anywhere in line
-   
 
 
-    if(line[1:2] == '10'):                # init: 10
+    if(line[1:3] == "10"):                # init: 10
         #Splitting the line to: P|1 0| I I I I I
-        binaryInput = [line[0:0], line[1:2], line[3:7]]
+        binaryInput = [line[0], line[1:3], line[3:8]]
 
         #Disassembling it to: init imm
         disassembled[0]  = "init "
@@ -41,9 +40,9 @@ for line in input_file:
         print(disassembled[0] + disassembled[1])
         output_file.write(disassembled[0] + disassembled[1])
     
-    elif(line[1:2] == '11'):                # bez: 11
+    elif(line[1:3] == '11'):                # bez: 11
         # Splitting the line to: P|1 0| I I I I I
-        binaryInput = [line[0:0], line[1:2], line[3:7]]
+        binaryInput = [line[0], line[1:3], line[3:8]]
 
         # Disassembling it to: bez imm
         disassembled[0] = "bez "
@@ -53,9 +52,9 @@ for line in input_file:
         print(disassembled[0] + disassembled[1])
         output_file.write(disassembled[0] + disassembled[1])
 
-    elif(line[1:4] == '0000'):                # add: 0000
+    elif(line[1:5] == '0000'):                # add: 0000
         # Splitting the line to: P|0 0 0 0|Rx|Ry Ry
-        binaryInput = [line[0:0], line[1:4], line[5], line[6:7]]
+        binaryInput = [line[0], line[1:5], line[5], line[6:8]]
 
         # Disassembling it to: add rx, ry
         disassembled[0] = "add "
@@ -67,9 +66,9 @@ for line in input_file:
         print(disassembled[0] + disassembled[1] + disassembled[2])
         output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
 
-    elif (line[1:4] == '0001'):  # slt: 0001
+    elif (line[1:5] == '0001'):  # slt: 0001
         # Splitting the line to: P|0 0 0 1|Rx|Ry Ry
-        binaryInput = [line[0:0], line[1:4], line[5], line[6:7]]
+        binaryInput = [line[0], line[1:5], line[5], line[6:8]]
 
         # Disassembling it to: slt rx, ry
         disassembled[0] = "slt "
@@ -81,9 +80,9 @@ for line in input_file:
         print(disassembled[0] + disassembled[1] + disassembled[2])
         output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
 
-    elif (line[1:4] == '0011'):  # lw: 0011
+    elif (line[1:5] == '0011'):  # lw: 0011
         # Splitting the line to: P|0 0 1 1|I I I
-        binaryInput = [line[0:0], line[1:4], line[5:7]]
+        binaryInput = [line[0], line[1:5], line[5:8]]
 
         # Disassembling it to: lw imm
         disassembled[0] = "lw "
@@ -93,9 +92,9 @@ for line in input_file:
         print(disassembled[0] + disassembled[1])
         output_file.write(disassembled[0] + disassembled[1])
 
-    elif (line[1:4] == '0010'):  # lw: 0010
+    elif (line[1:5] == '0010'):  # lw: 0010
         # Splitting the line to: P|0 0 1 0|I I I
-        binaryInput = [line[0:0], line[1:4], line[5:7]]
+        binaryInput = [line[0], line[1:5], line[5:8]]
 
         # Disassembling it to: sw imm
         disassembled[0] = "sw "
@@ -105,9 +104,9 @@ for line in input_file:
         print(disassembled[0] + disassembled[1])
         output_file.write(disassembled[0] + disassembled[1])
 
-    elif (line[1:4] == '0100'):  # xor: 0100
+    elif (line[1:5] == '0100'):  # xor: 0100
         # Splitting the line to: P|0 1 0 0|Rx|Ry Ry
-        binaryInput = [line[0:0], line[1:4], line[5], line[6:7]]
+        binaryInput = [line[0], line[1:5], line[5], line[6:8]]
 
         # Disassembling it to: xor rx, ry
         disassembled[0] = "xor "
@@ -119,9 +118,9 @@ for line in input_file:
         print(disassembled[0] + disassembled[1] + disassembled[2])
         output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
 
-    elif (line[1:4] == '0101'):  # and: 0101
+    elif (line[1:5] == '0101'):  # and: 0101
         # Splitting the line to: P|0 1 0 1|Rx|Ry Ry
-        binaryInput = [line[0:0], line[1:4], line[5], line[6:7]]
+        binaryInput = [line[0], line[1:5], line[5], line[6:8]]
 
         # Disassembling it to: and rx, ry
         disassembled[0] = "and "
@@ -145,9 +144,9 @@ for line in input_file:
         print(disassembled[0] + disassembled[1])
         output_file.write(disassembled[0] + disassembled[1])
 
-    elif (line[1:4] == '0110'):  # halt: 0110
+    elif (line[1:5] == '0110'):  # halt: 0110
         # Splitting the line to: P|0 1 1 1|X X X
-        binaryInput = [line[0:0], line[1:4],line[5:7]]
+        binaryInput = [line[0], line[1:5],line[5:8]]
 
         # Disassembling it to: and rx, ry
         disassembled[0] = "halt\n"
@@ -157,6 +156,6 @@ for line in input_file:
     else:
         print("Unknown instruction:"+line)
 
-input_file.close()
+input_file.close()w
 output_file.close()
 
