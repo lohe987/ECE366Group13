@@ -12,12 +12,12 @@ For both Code parts, the initalize memory is considered to start from zero.
 There is 4 dedicated memory slots for the registers in memory that are unreachable from lw/sw instructions.
 
 Instructions=>
-init imm
+init Rx imm
 	MC: P|1 0|Rx I I I I
-	*Note: Rx can only be $r0 and $r1
-bez imm
-	MC: P|1 1|I I I I I
-	*Note: Always compares register zero to 0 ($r0 =? 0)
+	*Note: Rx can only be $r0 and $r1 => address for imm to be stored
+bez Rx
+	MC: P|1 1|Rx X X X X
+	*Note: Rx can only be $r0 and $r1 => jump distance; $r0 == 0 then the jump is done, otherwise ignore
 add Rx Ry
 	MC: P|0 0 0 0|Rx|Ry Ry
 	*Note: Rx can only be $r0 and $r1; Ry = $r0, $r1, $r2, $r3; Sum is stored in Ry
