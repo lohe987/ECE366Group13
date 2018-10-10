@@ -29,33 +29,29 @@ for line in input_file:
 
 
     if(line[1:3] == "10"):                # init: 10
-        #Splitting the line to: P|1 0| I I I I I
-        binaryInput = [line[0], line[1:3], line[3:8]]
+        #Splitting the line to: P|1 0|Rx| I I I I
+        binaryInput = [line[0], line[1:3], line[3], line[4:8]]
 
         #Disassembling it to: init imm
-        disassembled[0]  = "init "
-        if(binaryInput[2][0] == '1'):
+        disassembled[0] = "init "
+        disassembled[1] = "$" + str(int(binaryInput[3])) + ", "
+        if(binaryInput[3][0] == '1'):
             binaryInput[2] = -32 + int(format(int(binaryInput[2], 2)))
-            imm = str(int(binaryInput[2]))
+            imm = str(int(binaryInput[3]))
         else:
-            imm = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = imm + "\n"
+            imm = str(int(format(int(binaryInput[3], 2))))
+        disassembled[2] = imm + "\n"
        
         print(disassembled[0] + disassembled[1])
         output_file.write(disassembled[0] + disassembled[1])
     
     elif(line[1:3] == '11'):                # bez: 11
-        # Splitting the line to: P|1 0| I I I I I
-        binaryInput = [line[0], line[1:3], line[3:8]]
+        # Splitting the line to: P|1 0|Rx|X X X X
+        binaryInput = [line[0], line[1:3], line[3], line[4:8]]
 
         # Disassembling it to: bez imm
         disassembled[0] = "bez "
-        if(binaryInput[2][0] == '1'):
-            binaryInput[2] = -32 + int(format(int(binaryInput[2], 2)))
-            imm = str(int(binaryInput[2]))
-        else:
-            imm = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = imm + "\n"
+        disassembled[1] = "$" + binaryInput[2] + "\n"
 
         print(disassembled[0] + disassembled[1])
         output_file.write(disassembled[0] + disassembled[1])
@@ -89,28 +85,28 @@ for line in input_file:
         output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
 
     elif (line[1:5] == '0011'):  # lw: 0011
-        # Splitting the line to: P|0 0 1 1|I I I
-        binaryInput = [line[0], line[1:5], line[5:8]]
+        # Splitting the line to: P|0 0 1 1|Ry Ry|Rx
+        binaryInput = [line[0], line[1:5], line[5:7], line[7]]
 
         # Disassembling it to: lw imm (unsigned)
         disassembled[0] = "lw "
-        imm = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = imm + "\n"
+        disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + ", "
+        disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2)))) + "\n"
 
-        print(disassembled[0] + disassembled[1])
-        output_file.write(disassembled[0] + disassembled[1])
+        print(disassembled[0] + disassembled[1] + disassembled[2])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
 
     elif (line[1:5] == '0010'):  # lw: 0010
         # Splitting the line to: P|0 0 1 0|I I I
-        binaryInput = [line[0], line[1:5], line[5:8]]
+        binaryInput = [line[0], line[1:5], line[5:7], line[7]]
 
         # Disassembling it to: sw imm (unsigned)
         disassembled[0] = "sw "
-        imm = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = imm + "\n"
+        disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + ", "
+        disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2)))) + "\n"
 
-        print(disassembled[0] + disassembled[1])
-        output_file.write(disassembled[0] + disassembled[1])
+        print(disassembled[0] + disassembled[1] + disassembled[2])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
 
     elif (line[1:5] == '0100'):  # xor: 0100
         # Splitting the line to: P|0 1 0 0|Rx|Ry Ry
@@ -142,24 +138,25 @@ for line in input_file:
 
     elif (line[1:4] == '0111'):  # srl: 0111
         # Splitting the line to: P|0 1 1 1|Rx Rx Rx
-        binaryInput = [line[0:0], line[1:4],line[5:7]]
+        binaryInput = [line[0:0], line[1:4], line[5:7]]
 
-        # Disassembling it to: and rx, ry
+        # Disassembling it to: srl rx
         disassembled[0] = "srl "
-        rx = str(int(format(int(binaryInput[1], 2))))
-        ry = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = "$" + rx + ", "
+        disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + "\n"
         print(disassembled[0] + disassembled[1])
         output_file.write(disassembled[0] + disassembled[1])
 
-    elif (line[1:5] == '0110'):  # halt: 0110
-        # Splitting the line to: P|0 1 1 1|X X X
-        binaryInput = [line[0], line[1:5],line[5:8]]
+    elif (line[1:5] == '0110'):  # sub: 0110
+        # Splitting the line to: P|0 1 1 1|Rx|Ry|Rz
+        binaryInput = [line[0], line[1:5], line[5], line[6], line[7]]
 
-        # Disassembling it to: and rx, ry
-        disassembled[0] = "halt\n"
-        print(disassembled[0])
-        output_file.write(disassembled[0])
+        # Disassembling it to: sub rx, ry, rz
+        disassembled[0] = "sub"
+        disassembled[1] = "$" + str(binaryInput[2]) + ","
+        disassembled[2] = "$" + str(binaryInput[3]) + ","
+        disassembled[3] = "$" + str(binaryInput[4]) + "\n"
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
     else:
         print("Unknown instruction:"+line)
