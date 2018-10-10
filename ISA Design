@@ -1,27 +1,34 @@
-ISA NAME=> Name
+ISA NAME=> ISANameProject2
 
 Registers used=> 4
+$r0 => Full general use and result storage
+$r1 => Flexable
+$r2 => Specalized addressing for advanced calcualtions
+$r3 => Specalized addressing for advanced calcualtions
 
 Memory=> 16 bit data with is taged to an integer
+Each memory location starts at zero and increments by 1 each time. 
+For both Code parts, the initalize memory is considered to start from zero.
+There is 4 dedicated memory slots for the registers in memory that are unreachable from lw/sw instructions.
 
 Instructions=>
 init imm
-	MC: P|1 0|I I I I I
-	*Note: Always initializes register zero ($r0 = imm)
+	MC: P|1 0|Rx I I I I
+	*Note: Rx can only be $r0 and $r1
 bez imm
 	MC: P|1 1|I I I I I
 	*Note: Always compares register zero to 0 ($r0 =? 0)
 add Rx Ry
 	MC: P|0 0 0 0|Rx|Ry Ry
-	*Note: Rx can only be $r0 and $r1; Sum is stored in Ry
+	*Note: Rx can only be $r0 and $r1; Ry = $r0, $r1, $r2, $r3; Sum is stored in Ry
 slt Rx Ry
 	MC: P|0 0 0 1|Rx|Ry Ry
 	*Note: Rx can only be $r0 and $r1; Ry = $r0, $r1, $r2, $r3; puts value at Rx (Rx = Rx <? Ry)
 lw Address
-	MC: P|0 0 1 1|A A A
-	*Note: Always referring to $r0; Address is an immediate number on where to load the value from
+	MC: P|0 0 1 1|Rx Rx X  
+	*Note: Always referring to $r0 as destination; Rx can only be $r0 and $r1; Address is reached from the value stored in Rx register; X does not matter;
 sw Address
-	MC: P|0 0 1 0|A A A
+	MC: P|0 0 1 0|Rx Rx X 
 	*Note: Always referring to $r0; Address is an immediate number on where to store the value to
 XOR Rx Ry
 	MC: P|0 1 0 0|Rx|Ry Ry
@@ -30,8 +37,8 @@ AND Rx Ry
 	MC: P|0 1 0 1|Rx|Ry Ry
 	*Note: Rx can only be $r0 and $r1; Ry = $r0, $r1, $r2, $r3; puts value at Rx (Rx = Rx AND Ry)
 srl Rx
-	MC: P|0 1 1 1|Rx Rx Rx
-	*Note: Barrel shifts right Rx; 
+	MC: P|0 1 1 1|Rx Rx X
+	*Note: Barrel shifts right Rx; X does not matter
 Halt
-	MC: P|0 1 1 0|X X X X
+	MC: P|0 1 1 0|X X X
 	*Note: X does not matter; Ends Program.
