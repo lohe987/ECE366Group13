@@ -1,0 +1,101 @@
+Assembly code: 
+(Notes: “JUMP DISTANCE!!!!!!!!!!!!!!”’s distance and instruction are calculated and complete in the machine code. The code is based on the code provided in the github)
+			Init r0 1    #r0 = 1
+			Init r1 2     #r1 = 2 
+			Sw r0 r1     #0x2 = 1 <= r0
+
+			init r1 5  #r1 = 5
+			Sw r0 r1    #holds sum of numbers for sum loop (r0 = 1 already)
+
+			Init r0 5    #r0 = 5
+			Init r1 3    #r1 = 3
+			Sw r0 r1    #0x3 = 5, loop counter for sum
+
+			Init r0 1    #r0 = 1
+			Lw r0 r0     #r0 = 0x1
+			Init r1 4     #r1 = 4
+			Sw r0 r1    #0x4 = r0 = Q , loop counter for mod
+
+			Init r0 0    #r0 = 0
+			Lw r0 r0    #r0 = P
+			Init r1 6    #r1 = 6
+			sw r0 r1    #0x6 = P, will be the loop counter
+
+			Init r0 0     #r0 = 0
+			Lw r0 r0    #r0 = Q
+			Init r1 0     #r1 = 0
+			Sub r1 r0 r0    #r1 - r0 = -Q = r0
+			Inti r1 7    #r1 = 7
+			Sw r0 r1    #0x7 = -17 <= r0, The -17 counter
+
+Loop:    	init r1 6 #r1 = 6
+			Lw r0 r1    #r0 = P <=0x6 (counter version)
+			Init r1 j # ‘j’ = end JUMP DISTANCE!!!!!!!!!!!!!!
+			bez r1    #imm will be the number to reach end 
+
+sum:     	init r1 3    #r1 = 3
+			lw r0 r1    #r0 = value in 0x3
+			Init r1    #r1 = number to reach mod!!!!!!!!!!!
+			bez r1    #Jump for mod when 0x3 == 0
+			Inti r1 5    #r1 = 5
+			lw r1 r1    #r1 = value of 0x5
+			Init r0 2    #r0 = 2
+			lw r0 r0    #r0 = value of 0x2
+			add r1 r0 #r0 = r0 + r1
+			Init r1 5    #r1 = 5
+			sw r0 r1    #0x5 = r0
+			init r1 3        #in order to reset r1 to 0
+			lw r1 r1        #r1 = value of 0x3 <=r1
+			init r0 -1    #r0 = -1
+			add r1, r0    #r0 = r0 + r1
+			Init r1 3        #r1 = 3
+			sw r0 r1        #0x3 = r0
+			Init r0 0        #r0 = 0
+			Init r1 j     # ‘j’ = sum JUMP DISTANCE!!!!!!!!!!!
+			bez r1        #imm would be number to reach sum
+ 
+mod:    	init r0 4    #r0 = 4, in order to reset r1 to 0
+			Init r1 5    #r1 = 5
+			lw r1 r1    #r0 = value of 0x5
+			lw r0 r0    #r0 = value of 0x4
+			slt r1, r0 #r0 = r1<r0
+			Init r1 j     # ‘j’ = smallj JUMP DISTANCE!!!!!!!!!!!
+			bez r1    #skip if r0 == 0
+			Init r0 0    #r0 = 0
+			Init r1 j     # ‘j’ = lower JUMP DISTANCE!!!!!!!!!!!
+			bez r1    #jump to lower
+smallj:		Init r0 7    #r0 = 7, in order to reset r1 to 0
+			Init r1 5    #r1 = 5 
+			lw r1 r1    #r1 = value of 0x5
+			lw r0 r0    #r0 = -17
+			add r1, r0 #r0 = - 17 + r1
+			Init r1 5    #r1 = 5
+			sw r0 r1    #0x5 = r0
+			init r0 0    #r0 = 0
+			Init r1 j     # ‘j’ = mod JUMP DISTANCE!!!!!!!!!!!
+			bez r1    #imm is the number to reach mod
+
+lower:     	init r0 6    #r0 = 6
+			Init r1 -1    #r1 = -1
+			lw r0 r0    #r0 = value of 0x6
+			add r1, r0 #r0 = r0 - 1
+			Init r1 6    #r1 = 6
+			sw r0 r1    #0x6 = r0
+			Init r0 5    #r0 = 5
+			Init r1 3  #r1 = 3
+			sw r0 r1    #0x3 = r0
+			lw r0 r0    #r0 = value of 0x5
+			Init r1 2    #r1 = 2
+			sw r0 r1    #0x2 = r0
+			init r0 0    #r0 = 0
+			Init r1 j     # ‘j’ = loop JUMP DISTANCE!!!!!!!!!!!
+			bez r1    #imm is number to reach loop
+
+end:        init r0 5    #r0 5
+			lw r0 r0    #r0 = value of 0x5
+			Init r1 1    #r1 = 1
+			sw r0 r1    #0x1 = r0
+
+exit:       init r0 0    #r0 = 0
+			Init r1 -3 #r1 = -3, back -3+1 instructions to loop infinite
+			bez r1    #imm is the number to reach exit
