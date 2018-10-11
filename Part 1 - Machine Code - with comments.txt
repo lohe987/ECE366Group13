@@ -109,8 +109,8 @@
 11110000 #imm is number to reach loop
 11000101 #r0 5 !!! end JUMP LOCATION !!!
 00011000 #r0 = value of 0x5
-11010001 #r1 = 1
-00010001 #0x1 = r0
+11010010 #r1 = 2
+00010001 #0x2 = r0
 11000000 #r0 = 0 !!! exit JUMP LOCATION !!!
 11011101 #r1 = -2, back -2 instructions to loop infinite
 11110000 #imm is the number to reach exit
