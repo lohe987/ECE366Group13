@@ -1,0 +1,178 @@
+(NOTE: Instead of storing the best matching scores of each value into new memory like i did in my program, we could just store them into the memory that the value itself was in. It still works since I tried it while i was doing project 1)
+(Array values are only 16 bit)(Jump distances are determined in the machine code)
+Assembly code:
+		init r0 2    #r0 = 2
+		init r1 7    #r1 = 7
+		Add r1 r1    #r1 = 14
+		Add r0 r1    #r1 = 16
+		Init r0 0    #r0 = 0
+		sw r1 r0    #0x0 = 16 maximum bms
+		
+		init r0 1    #r0 = 1
+		init r1 0    #r1 = 0
+		sw r1 r0    #0x1 = 0 counter
+
+		init r0 6    #r0 = 6
+		init r1 7    #r1 = 7
+		add r1 r1    #r1 = 14
+		add r1 r1    #r1 = 28
+		add r1 r1    #r1 = 56
+		add r1 r1    #r1 = 112
+		sub r1 r0 r1    #r1 - r0 = 106 = r1 
+		sub r1 r0 r1    #r1 - r0 = 100 = r1
+		init r0 2    #r0 = 2
+		sw r1 r0    #0x2 = 100 number of values in print array
+
+		Init r0 6    #r0 = 6
+		Init r1 1    #r1 = 1
+		Sw r1 r0    #0x6 = 1 counter for bmc
+
+		init r0 7    #r0 = 7
+		Init r1 1    #r1 = 1
+		Add r1 r0    #r0 = 8
+		Init r1 7    #r1 = 7
+		sw r0 r1    #0x7 = 8
+
+next:   init r0 7    #r0 = 7
+        Lw r1 r0    #r1 = address in 0x7
+        Lw r2 r1    #r2 = value in each address from array(start@0x8)
+      
+		Init r0 3    #r0 = 3
+        Lw r0 r0    #r0 = T
+		XOR r0 r2    #r2 = value in array XOR T 
+
+shift:  init r1 1    #r1 = 1
+        And r1 r2    #r1 = 1 AND value from xor 
+        
+		Init r0 1    #r0 = 1
+        Lw r3 r0    #r3 = value in 0x1
+		Add r1 r3    #r3 = r1 + r3
+		Sw r3 r0    #0x1 = r3
+
+		Srl r2 #r2 shifted right 
+        Bez sub CHECK!!!! #branch to sub
+        
+        Init r0 0 #r0 = 0
+        Bez !!shift CHECK!!!! #branch to shift
+
+sub:    init r0 0    #r0 = 0
+		Lw r1 r0    #r1 = 16 
+        Init r0 1    #r0 = 1
+        Lw r0 r0    #r0 = value in 0x1
+        Sub r1 r0 r0    #r0 = best matching score of array element
+        
+		Init r1 7    #r1 = 7
+        Lw r1 r1    #r1 = print array address stored in 0x7
+        Sw r0 r1    #store bms into print array address specified
+
+        Init r0 0    #r0 = 0
+		Init r1 1    #r1 = 1
+		Sw r0 r1    #0x1 = 0
+
+Save:   init r0 7    #r0 = 0x7
+        Lw r0 r0     #r0 = address stored in 0x7
+        Init r1 1    #r1 = 1 
+        Add r0 r1    #r1 = r0 + 1
+        Sw r1 r0    #0x7 = next address in print array
+        
+        Init r0 2        #r0 = 2
+        Lw r0 r0        #r0 = value in 0x2
+        Init r1 1        #r1 = 1
+        Sub r0 r1 r0    #r0 = r0 - 1
+        Init r1 2        #r1 = 2
+        Sw r0 r1        #0x2 = r0
+        Bez !!check CHECK!!! #branch to check    // r1 will be jump number
+        Init r0 = 0    #r0 = 0
+        Bez next CHECK!!! #branch to next // r1 will be jump number
+
+Check:  init r0 7    #r0 = 7 start looking@ start of print array
+		Init r1 1    #r1 = 1
+		Add r1 r0    #r0 = 8
+		Init r1 7    #r1 = 7
+		sw r0 r1    #0x7 = 8 
+         
+        init r0 6    #r0 = 6 
+		init r1 7    #r1 = 7
+		add r1 r1    #r1 = 14
+		add r1 r1    #r1 = 28
+		add r1 r1    #r1 = 56
+		add r1 r1    #r1 = 112
+		sub r1 r0 r1    #r1 - r0 = 106 = r1 
+		sub r1 r0 r1    #r1 - r0 = 100 = r1
+		init r0 2    #r0 = 2
+		sw r1 r0    #0x2 = 100 for loop counter
+
+Loop:   init r0 -1    #r0 = -1
+        Init r1 2    #r1 = 2
+        Lw r1 r1    #r1 = value stored in 0x2
+        Add r1 r0    #r0 = r1 - 1
+
+        Bez !!    #branch to end, checks if the end of print array reached // r1 will be jump number
+    
+        Init r0 7    #r0 = 7, compare two values loaded from array
+        Lw r0 r0    #r0 = array address stored in 0x7
+        Init r1 1    #r1 = 1
+        Add r1 r0    #r0 = next address in array
+        Lw r2 r0    #r2 = array value in next address
+        Sub r0 r1 r0    #r0 = previous address 
+        Lw r1 r0    #r1 = previous value in array
+        Slt r1 r2    #compares r1 < r2, to see which has bms
+        
+        Init r0 0    #r0 = 0
+        Add r1 r0    #r0 = r1
+        Bez !!greateq #branch to greateq, figuring out best matching score // r1 will be jump number
+
+		Init r0 4    #r0 = 4
+		Sw r2 r0    #0x4 = r2, store the highest bms         
+        
+        Init r0 6    #r0 = 6
+		Init r1 1    #r1 = 1
+		Sw r1 r0    #0x6 = 1, resetting bmc counter to 1
+        
+        Init r0 0    #r0 = 0
+        Bez !!next2 #branch to next2 // r1 will be jump number
+
+Greateq:    Init r0 7    #r0 = 7
+        Lw r0 r0    #r0 = array address stored in 0x7
+        Lw r0 r0    #r0 = value in array address
+        Init r1 4    #r1 = 4
+        Sw r0 r1    #0x4 = r0, store highest bms
+
+        #subtract array val and next array val, if 0 then theyre eq
+        Init r0 7    #r0 = 7
+        Lw r0 r0    #r0 = array address stored in 0x7
+        Init r1 1    #r1 = 1
+        Add r1 r0    #r0 = next address in array
+        Lw r2 r0    #r2 = array value in next address
+        Sub r0 r1 r0    #r0 = previous address 
+        Lw r1 r0    #r1 = previous value in array
+        Sub r1 r0 r0 #r0 = r1 - r0
+        Bez !!equal #branch to equal
+
+        Init r0 0    #r0 = 0
+        Bez !!next2    #branch to next2
+
+Equal:    init r0 6    #r0 = 6
+        Lw r0 r0    #r0 = value in 0x6
+        Init r1 1    #r1 = 1
+        Add r1 r0    #r0 = r1 + r0
+        Init r1 6    #r1 = 6
+        Sw r0 r1    #0x6 = r0, incrementing bmc
+
+		Init r0 0
+		Init r1 
+		Bez !!next2 #branch to next2
+
+		Next2:    init r0 4    #r0 = 4
+		Lw r1 r0    #r1 = value in 0x4
+		Init r0 7    #r0 = 7
+		Lw r0 r0    #r0 = address stored in 0x7
+		Sw r1 r0    #r0 address = r1
+		Init r0 0    #r0 = 0
+		Bez !!loop    #branch to loop
+End:    init r0 6    #r0 = 6
+		Lw r0 r0    #r0 = value in 0x6
+		Init r1 5    #r1 = 5    
+		Sw r0 r1    #0x5 = r0, storing the best match count
+Exit:   init r0 0    #r0 = 0
+		Bez r1    #dead loop
