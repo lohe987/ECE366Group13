@@ -39,7 +39,6 @@ for line in input_file:
             imm = -16 + int(format(int(binaryInput[3], 2)))
             imm = str(int(imm))
         else:
-            print(int(format(int(binaryInput[3], 2))))
             imm = str(int(format(int(binaryInput[3], 2))))
         disassembled[2] = imm + "\n"
        
