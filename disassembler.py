@@ -18,7 +18,7 @@ print("___________")
 input_file = open("ISA_machine_code.txt", "r")
 output_file = open("ISA_assembly.txt","w")
 
-disassembled = [None] * 3
+disassembled = [None] * 4
 for line in input_file:
     if (line == "\n"):              # empty lines ignored
         continue
@@ -34,16 +34,17 @@ for line in input_file:
 
         #Disassembling it to: init imm
         disassembled[0] = "init "
-        disassembled[1] = "$" + str(int(binaryInput[3])) + ", "
+        disassembled[1] = "$" + str(int(binaryInput[2])) + ", "
         if(binaryInput[3][0] == '1'):
-            binaryInput[2] = -32 + int(format(int(binaryInput[2], 2)))
-            imm = str(int(binaryInput[3]))
+            imm = -16 + int(format(int(binaryInput[3], 2)))
+            imm = str(int(imm))
         else:
+            print(int(format(int(binaryInput[3], 2))))
             imm = str(int(format(int(binaryInput[3], 2))))
         disassembled[2] = imm + "\n"
        
-        print(disassembled[0] + disassembled[1])
-        output_file.write(disassembled[0] + disassembled[1])
+        print(disassembled[0] + disassembled[1] + disassembled[2])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
     
     elif(line[1:3] == '11'):                # bez: 11
         # Splitting the line to: P|1 0|Rx|X X X X
