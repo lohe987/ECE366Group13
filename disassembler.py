@@ -25,8 +25,12 @@ for line in input_file:
 
     line = line.replace("\n","")    # remove 'endline' character
     print("Instr: ", line)          # show the binary instruction to screen
-    line = line[0:9].replace(" ","") + line[9:len(line)]     # remove spaces anywhere in line[0:8]
-
+    splitLine = line.split("#")
+    print("Length: " + str(len(splitLine)))
+    if(len(splitLine) == 2):
+        line = splitLine[0].replace(" ","") + "#" + splitLine[1]     # remove spaces anywhere in line[0:8]
+    else:
+        line = splitLine[0].replace(" ","")
 
     if(line[1:3] == "10"):                # init: 10
         #Splitting the line to: P|1 0|I I|Rx| I I
@@ -57,7 +61,7 @@ for line in input_file:
 
         # Disassembling it to: bez imm
         disassembled[0] = "bez "
-        disassembled[1] = "$" + binaryInput[3] + "\n"
+        disassembled[1] = "$" + binaryInput[3]
         if(len(line)>8):
             if(line[8] == "#"):
                 disassembled[2] = " " + line[8:len(line)]
@@ -76,7 +80,7 @@ for line in input_file:
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = "$" + rx + ", "
-        disassembled[2] = "$" + ry + "\n"
+        disassembled[2] = "$" + ry
         if(len(line)>8):
             if(line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -96,7 +100,7 @@ for line in input_file:
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = "$" + rx + ", "
-        disassembled[2] = "$" + ry + "\n"
+        disassembled[2] = "$" + ry
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -114,11 +118,11 @@ for line in input_file:
         # Disassembling it to: lw imm (unsigned)
         disassembled[0] = "lw "
         disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + ", "
-        disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2)))) + "\n"
+        disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2))))
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
-            disassembled[3] = disassembled[3] +  "\n"
+            disassembled[3] = disassembled[3] + "\n"
         else:
             disassembled[3] = "\n"
 
@@ -132,7 +136,7 @@ for line in input_file:
         # Disassembling it to: sw imm (unsigned)
         disassembled[0] = "sw "
         disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + ", "
-        disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2)))) + "\n"
+        disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2))))
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -152,7 +156,7 @@ for line in input_file:
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = "$" + rx + ", "
-        disassembled[2] = "$" + ry + "\n"
+        disassembled[2] = "$" + ry
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -172,7 +176,7 @@ for line in input_file:
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = "$" + rx + ", "
-        disassembled[2] = "$" + ry + "\n"
+        disassembled[2] = "$" + ry
 
         if (len(line) > 8):
             if (line[8] == "#"):
@@ -190,7 +194,7 @@ for line in input_file:
 
         # Disassembling it to: srl rx
         disassembled[0] = "srl "
-        disassembled[1] = "$" + str(int(format(int(binaryInput[3], 2)))) + "\n"
+        disassembled[1] = "$" + str(int(format(int(binaryInput[3], 2))))
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[2] = " " + line[8:len(line)]
@@ -209,7 +213,7 @@ for line in input_file:
         disassembled[0] = "sub"
         disassembled[1] = "$" + str(binaryInput[2]) + ","
         disassembled[2] = "$" + str(binaryInput[3]) + ","
-        disassembled[3] = "$" + str(binaryInput[4]) + "\n"
+        disassembled[3] = "$" + str(binaryInput[4])
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[4] = " " + line[8:len(line)]
