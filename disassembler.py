@@ -76,10 +76,10 @@ for line in input_file:
 
         # Disassembling it to: add rx, ry
         disassembled[0] = "add "
-        rx = str(int(format(int(binaryInput[1], 2))))
-        ry = str(int(format(int(binaryInput[2], 2))))
+        rx = str(int(format(int(binaryInput[2], 2))))
+        ry = str(int(format(int(binaryInput[3], 2))))
         disassembled[1] = "$r" + rx + ", "
-        disassembled[2] = "$r" + ry+ "\t"
+        disassembled[2] = "$r" + ry + "\t"
         if(len(line)>8):
             if(line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -152,8 +152,8 @@ for line in input_file:
 
         # Disassembling it to: xor rx, ry
         disassembled[0] = "xor "
-        rx = str(int(format(int(binaryInput[1], 2))))
-        ry = str(int(format(int(binaryInput[2], 2))))
+        rx = str(int(format(int(binaryInput[2], 2))))
+        ry = str(int(format(int(binaryInput[3], 2))))
         disassembled[1] = "$r" + rx + ", "
         disassembled[2] = "$r" + ry + "\t"
         if (len(line) > 8):
@@ -172,8 +172,8 @@ for line in input_file:
 
         # Disassembling it to: and rx, ry
         disassembled[0] = "and "
-        rx = str(int(format(int(binaryInput[1], 2))))
-        ry = str(int(format(int(binaryInput[2], 2))))
+        rx = str(int(format(int(binaryInput[2], 2))))
+        ry = str(int(format(int(binaryInput[3], 2))))
         disassembled[1] = "$r" + rx + ", "
         disassembled[2] = "$r" + ry +  "\t"
 
