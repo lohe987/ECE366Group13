@@ -175,7 +175,7 @@ for line in input_file:
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = "$r" + rx + ", "
-        disassembled[2] = "$r" + ry + "\t"
+        disassembled[2] = "$r" + ry +  "\t"
 
         if (len(line) > 8):
             if (line[8] == "#"):
