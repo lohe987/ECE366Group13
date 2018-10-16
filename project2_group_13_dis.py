@@ -15,8 +15,8 @@ print("halt")
 
 print("___________")
 
-input_file = open("Part 2 - Machine Code - with comments.txt", "r")
-output_file = open("Part 2 - Assembly(from Machine Code) - with comments.txt","w")
+input_file = open("project2_group_13_p2_bin.txt", "r")
+output_file = open("project2_group_13_p2_asm.txt","w")
 
 disassembled = [""] * 5
 for line in input_file:

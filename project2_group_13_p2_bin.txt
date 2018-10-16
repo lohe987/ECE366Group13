@@ -3,7 +3,7 @@
 00000101 #r1 = 14
 10000001 #r1 = 16
 11000000 #r0 = 0
-00010001 #0x0 = 16 maximum bms
+00010001 #0x0 = 16 maximum that best matching score could be
 01000001 #r0 = 1
 01000100 #r1 = 0
 00010100 #0x1 = 0 counter
@@ -16,57 +16,57 @@
 00110101 #r1 - r0 = 106 = r1
 00110101 #r1 - r0 = 100 = r1
 01000010 #r0 = 2
-00010001 #0x2 = 100 number of values in print array
+00010001 #0x2 = 100 the total number of values in print array
 11001010  #r0 = 6
 11000101 #r1 = 1
-00010001 #0x6 = 1 counter for bmc
+00010001 #0x6 = 1 counter for best matching count
 11001011 #r0 = 7
 11000101 #r1 = 1
 10000100 #0x7 = 8
 01001011 #r0 = 7
-00010100 #0x7 = 8
+00010100 #0x7 = 8; will act as an address pointer to walk through print array
 11011011 #r0 = 7, next JUMP LOCATION!!!
 10011001 #r1 = address in 0x7
-00011110 #r2 = value in each address from array(start@0x8)
-11000011 #r0 =3
+00011110 ##r2 = value taken from print array starting at 0x8
+11000011 #r0 = 3
 00011000 #r0 = T
-00100010 #r2 = value in array XOR T
+00100010  #r2 = r0 xor r2 compare each bit of the value with T to see bits that don't match
 11000101 #r1 = 1, shift JUMP LOCATION
-00101110 #r1 = 1 AND value from xor
+00101110 #r1 = r1 AND r2 seeing how many bits that don't match
 01000001 #r0 = 1
 00011011 #r3 = value in 0x1
 10000111 #r3 = r1 + r3
-10010011 #0x1 = r3
-00111010 #r2 shifted right
+10010011 #0x1 = r3 holding total number of bits that don't match
+00111010 #r2 shifted right to compare next bit
 01001110 #r1 = 6
 11101000 #branch to sub JUMP, jump of 6
 11000000 #r0 = 0
 11000000 #Buffer
 01010110 #r1 = -6
 00000101 #r1 = - 6 - 6 = -12
-11101000 #branch to shift JUMP, jump of -12
+11101000 #branch to shift JUMP, jump of -12, to keep shifting until no more bits to compare
 11000000 #r0 = 0, sub JUMP LOCATION
 10011001 #r1 = 16
 01000001 #r0 = 1
 00011000 #r0 = value in 0x1
-10110100 #r0 = best matching score of array element
+10110100 #r0 = best matching score of array value, subtracts 16 by r0 to get best matching score
 01001111 #r1 = 7
 00011101 #r1 = print array address stored in 0x7
-00010100 #store bms into print array address specified
+00010100 #store best matching scores of each value into print array addresses specified
 11000000 #r0 = 0
 11000101 #r1 = 1
-00010100 #0x1 = 0
+00010100 #0x1 = 0 reset value keeping track of bits that dont match to 0
 11011011 #r0 = 0x7, save JUMP LOCATION!!!
 00011000 #r0 = address stored in 0x7
 11000101 #r1 = 1
 10000001 #r1 = r0 + 1
-00010001 #0x7 = next address in print array
+00010001  #0x7 = next address in print array to check next value
 01000010 #r0 = 2
 00011000 #r0 = value in 0x2
 11000101 #r1 = 1
-10110010 #r0 = r0 - 1
+10110010 #r0 = r0 - 1 decrement counter
 11000110 #r1 = 2
-00010100 #0x2 = r0
+00010100 #0x2 = r0 save counter back to memory address
 11001111 #r1 = 7
 11101000 #branch to check, jump of 7
 01011001 #r0 = -3
@@ -77,7 +77,7 @@
 10000001 #r1 = -48 - 3 = -51
 11000000 #r0 = 0
 11110000 #branch to next, jump of -51
-11001111 #r0 = 7 start looking at start of print array check JUMP LOCATION!!!
+11001111 #r0 = 7 start looking at start of print array now containing best matching scores of each value; check JUMP LOCATION!!!
 11000101 #r1 = 1
 10000100 #r0 = 8
 11001111 #r1 = 7
@@ -95,7 +95,7 @@
 11011011 #r0 = -1, loop JUMP LOCATION!!!
 11000110 #r1 = 2
 00011101 #r1 = value stored in 0x2
-10000100 #r0 = r1 - 1
+10000100  #r0 = r1 - 1 decrement loop counter
 11001100 #r1 = 4
 00000101 #r1 = 4 + 4 = 8
 00000101 #r1 = 8 + 8 = 16
@@ -105,7 +105,7 @@
 11000000 #Buffer
 11000000 #Buffer
 11000000 #Buffer
-01001011 #r0 = 7, compare two values loaded from array
+01001011 #r0 = 7,  compares r1 < r2, to see which has best matching score
 00011000 #r0 = array address stored in 0x7
 11000101 #r1 = 1
 10000100 #r0 = next address in array
@@ -117,12 +117,12 @@
 10000100 #r0 = r1
 01001110 #r1 = 6
 00000101 #r1 = 6 + 6 = 12
-11101000 #branch to greateq, figuring out best matching score,jump of 12
+11101000 #branch to greateq, figuring out best matching score,jump of 12 //goes to greateq if greater or equal
 01001000 #r0 = 4
-00010010 #0x4 = r2, store the highest bms
+00010010 #0x4 = r2, store the highest best matching score
 11001010 #r0 =6
 11000101 #r1 = 1
-00010001 #0x6 = 1, resetting bmc counter to 1
+00010001 #0x6 = 1, resetting best matching count counter to 1
 01000001 #r0 = 1
 01001110 #r1 = 6
 00000101 #r1 = 6 + 6 = 12
@@ -133,7 +133,7 @@
 00011000 #r0 = array address stored in 0x7
 00011000 #r0 = value in array address
 11001010 #r1 = 4
-00010100 #0x4 = r0, store highest bms
+00010100 #0x4 = r0: store highest best matching score into 0x4
 01001011 #r0 = 7
 00011000 #r0 = array address stored in 0x7
 11000101 #r1 = 1
@@ -141,7 +141,7 @@
 10011010 #r2 = array value in next address
 10110010 #r0 = previous address
 10011001 #r1 = previous value in array
-10110100 #r0 = r1 - r0
+10110100 #r0 = r1 - r0: subtract best matching score and next best matching score, if 0 then they're equal
 11001100 #r1 = 4
 11101000 #branch to equal, jump 4
 11000000 #r0 = 0
@@ -152,7 +152,7 @@
 11000101 #r1 = 1
 10000100 #r0 = r1 + r0
 01001110 #r1 = 6
-00010100 #0x6 = r0, incrementing bmc
+00010100 #0x6 = r0, incrementing best matching count
 01001000 #r0 = 4, next2 JUMP LOCATION!!!
 10011001 #r1 = value in 0x4
 01001011 #r0 = 7
@@ -168,7 +168,7 @@
 11001010 #r0 = 6, end JUMP LOCATION!!!
 00011000 #r0 = value in 0x6
 01001101 #r1 = 5
-00010100 #0x5 = r0, storing best match count
+00010100 #0x5 = r0, storing the best matching count
 11000000 #r0 = 0
 11011101 #r1 = -2
 11101000 #dead loop

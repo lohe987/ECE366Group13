@@ -1,0 +1,173 @@
+init $r0, 2		 #r0 = 2
+init $r0, -1	 #r1 = 7
+add $r1, $r1	 #r1 = 14
+add $r0, $r1	 #r1 = 16
+init $r0, 0		 #r0 = 0
+sw $r0, $r1		 #0x0 = 16 maximum that best matching score could be
+init $r0, 1		 #r0 = 1
+init $r1, 0		 #r1 = 0
+sw $r1, $r0		 #0x1 = 0 counter
+init $r0, 6		 #r0 = 6
+init $r1, 7		 #r1 = 7
+add $r1, $r1	 #r1 = 14
+add $r1, $r1	 #r1 = 28
+add $r1, $r1	 #r1 = 56
+add $r1, $r1	 #r1 = 112
+sub $r1,$r0,$1	 #r1 - r0 = 106 = r1
+sub $r1,$r0,$1	 #r1 - r0 = 100 = r1
+init $r0, 2		 #r0 = 2
+sw $r0, $r1		 #0x2 = 100 the total number of values in print array
+init $r0, 6		 #r0 = 6
+init $r1, 1		 #r1 = 1
+sw $r0, $r1		 #0x6 = 1 counter for best matching count
+init $r0, 7		 #r0 = 7
+init $r1, 1		 #r1 = 1
+add $r1, $r0	 #0x7 = 8
+init $r0, 7		 #r0 = 7
+sw $r1, $r0		 #0x7 = 8; will act as an address pointer to walk through print array
+init $r0, -1	 #r0 = 7, next JUMP LOCATION!!!
+lw $r0, $r1		 #r1 = address in 0x7
+lw $r1, $r2		
+init $r0, 3		 #r0 = 3
+lw $r0, $r0		 #r0 = T
+xor $r0, $r2	 #r2 = r0 xor r2 compare each bit of the value with T to see bits that don't match
+init $r1, 1		 #r1 = 1, shift JUMP LOCATION
+and $r1, $r2	 #r1 = r1 AND r2 seeing how many bits that don't match
+init $r0, 1		 #r0 = 1
+lw $r0, $r3		 #r3 = value in 0x1
+add $r1, $r3	 #r3 = r1 + r3
+sw $r0, $r3		 #0x1 = r3 holding total number of bits that don't match
+init $r1, 6		 #r1 = 6
+bez $r0			 #branch to sub JUMP, jump of 6
+init $r0, 0		 #r0 = 0
+init $r0, 0		 #Buffer
+init $r1, -6	 #r1 = -6
+add $r1, $r1	 #r1 = - 6 - 6 = -12
+bez $r0			 #branch to shift JUMP, jump of -12, to keep shifting until no more bits to compare
+init $r0, 0		 #r0 = 0, sub JUMP LOCATION
+lw $r0, $r1		 #r1 = 16
+init $r0, 1		 #r0 = 1
+lw $r0, $r0		 #r0 = value in 0x1
+sub $r1,$r0,$0	 #r0 = best matching score of array value, subtracts 16 by r0 to get best matching score
+init $r1, 7		 #r1 = 7
+lw $r1, $r1		 #r1 = print array address stored in 0x7
+sw $r1, $r0		 #store best matching scores of each value into print array addresses specified
+init $r0, 0		 #r0 = 0
+init $r1, 1		 #r1 = 1
+sw $r1, $r0		 #0x1 = 0 reset value keeping track of bits that dont match to 0
+init $r0, -1	 #r0 = 0x7, save JUMP LOCATION!!!
+lw $r0, $r0		 #r0 = address stored in 0x7
+init $r1, 1		 #r1 = 1
+add $r0, $r1	 #r1 = r0 + 1
+sw $r0, $r1		 #0x7 = next address in print array to check next value
+init $r0, 2		 #r0 = 2
+lw $r0, $r0		 #r0 = value in 0x2
+init $r1, 1		 #r1 = 1
+sub $r0,$r1,$0	 #r0 = r0 - 1 decrement counter
+init $r1, 2		 #r1 = 2
+sw $r1, $r0		 #0x2 = r0 save counter back to memory address
+init $r1, 7		 #r1 = 7
+bez $r0			 #branch to check, jump of 7
+init $r0, -3	 #r0 = -3
+init $r1, -6	 #r1 = -6
+add $r1, $r1	 #r1 = -6 - 6 = -12
+add $r1, $r1	 #r1 = -12 - 12 = -24
+add $r1, $r1	 #r1 = -24 - 24 = -48
+add $r0, $r1	 #r1 = -48 - 3 = -51
+init $r0, 0		 #r0 = 0
+bez $r0			 #branch to next, jump of -51
+init $r1, 7		 #r0 = 7 start looking at start of print array now containing best matching scores of each value; check JUMP LOCATION!!!
+init $r1, 1		 #r1 = 1
+add $r1, $r0	 #r0 = 8
+init $r1, 7		 #r1 = 7
+sw $r1, $r0		 #0x7 = 8
+init $r0, 6		 #r0 = 6
+init $r1, 7		 #r1 = 7
+add $r1, $r1	 #r1 = 14
+add $r1, $r1	 #r1 = 28
+add $r1, $r1	 #r1 = 56
+add $r1, $r1	 #r1 = 112
+sub $r1,$r0,$1	 #r1 - r0 = 106 = r1
+sub $r1,$r0,$1	 #r1 - r0 = 100 = r1
+init $r0, 2		 #r0 = 2
+sw $r0, $r1		 #0x2 = 100 for loop counter
+init $r0, -1	 #r0 = -1, loop JUMP LOCATION!!!
+init $r1, 2		 #r1 = 2
+lw $r1, $r1		 #r1 = value stored in 0x2
+add $r1, $r0	 #r0 = r1 - 1 decrement loop counter
+init $r1, 4		 #r1 = 4
+add $r1, $r1	 #r1 = 4 + 4 = 8
+add $r1, $r1	 #r1 = 8 + 8 = 16
+add $r1, $r1	 #r1 = 16 + 16 = 32
+add $r1, $r1	 #r1 = 32 + 32 = 64
+bez $r0			 #branch to end, checks if end of print array reached, jump of 64
+init $r0, 0		 #Buffer
+init $r0, 0		 #Buffer
+init $r0, 0		 #Buffer
+init $r0, 7		 #r0 = 7,  compares r1 < r2, to see which has best matching score
+lw $r0, $r0		 #r0 = array address stored in 0x7
+init $r1, 1		 #r1 = 1
+add $r1, $r0	 #r0 = next address in array
+lw $r0, $r2		 #r2 = array value in next address
+sub $r0,$r1,$0	 #r0 = previous address
+lw $r0, $r1		 #r1 = previous value in array
+slt $r1, $r1	 #compares r1 < r2, to see which has higher bms
+init $r0, 0		 #r0 = 0
+add $r1, $r0	 #r0 = r1
+init $r1, 6		 #r1 = 6
+add $r1, $r1	 #r1 = 6 + 6 = 12
+bez $r0			 #branch to greateq, figuring out best matching score,jump of 12 //goes to greateq if greater or equal
+init $r0, 4		 #r0 = 4
+sw $r0, $r2		 #0x4 = r2, store the highest best matching score
+init $r0, 6		 #r0 =6
+init $r1, 1		 #r1 = 1
+sw $r0, $r1		 #0x6 = 1, resetting best matching count counter to 1
+init $r0, 1		 #r0 = 1
+init $r1, 6		 #r1 = 6
+add $r1, $r1	 #r1 = 6 + 6 = 12
+add $r1, $r1	 #r1 = 12 + 12 = 24
+add $r0, $r1	 #r1 = 24 + 1
+bez $r0			 #branch to next2, jump of 25
+init $r0, 7		 #r0 = 7, greateq JUMP LOCATION!!!
+lw $r0, $r0		 #r0 = array address stored in 0x7
+lw $r0, $r0		 #r0 = value in array address
+init $r0, 6		 #r1 = 4
+sw $r1, $r0		 #0x4 = r0: store highest best matching score into 0x4
+init $r0, 7		 #r0 = 7
+lw $r0, $r0		 #r0 = array address stored in 0x7
+init $r1, 1		 #r1 = 1
+add $r1, $r0	 #r0 = next address in array
+lw $r0, $r2		 #r2 = array value in next address
+sub $r0,$r1,$0	 #r0 = previous address
+lw $r0, $r1		 #r1 = previous value in array
+sub $r1,$r0,$0	 #r0 = r1 - r0: subtract best matching score and next best matching score, if 0 then they're equal
+init $r1, 4		 #r1 = 4
+bez $r0			 #branch to equal, jump 4
+init $r0, 0		 #r0 = 0
+init $r1, -5	 #r1 = 7
+bez $r0			 #branch to next2, jump of 7
+init $r0, 6		 #r0 = 6, equal JUMP LOCATION!!!
+lw $r0, $r0		 #r0 = value in 0x6
+init $r1, 1		 #r1 = 1
+add $r1, $r0	 #r0 = r1 + r0
+init $r1, 6		 #r1 = 6
+sw $r1, $r0		 #0x6 = r0, incrementing best matching count
+init $r0, 4		 #r0 = 4, next2 JUMP LOCATION!!!
+lw $r0, $r1		 #r1 = value in 0x4
+init $r0, 7		 #r0 = 7
+lw $r0, $r0		 #r0 = address stored in 0x7
+sw $r0, $r1		 #r0 address = r1
+init $r1, -8	 #r1 = -4
+add $r1, $r1	 #r1 = -4 - 4= -8
+add $r1, $r1	 #r1 = -8 - 8 = -16
+add $r1, $r1	 #r1 = -16 - 16 = -32
+add $r1, $r1	 #r1 = -32 - 32 = -64
+init $r0, 0		 #r0 = 0
+bez $r0			 #branch to loop, jump of -64
+init $r0, 6		 #r0 = 6, end JUMP LOCATION!!!
+lw $r0, $r0		 #r0 = value in 0x6
+init $r1, 5		 #r1 = 5
+sw $r1, $r0		 #0x5 = r0, storing the best matching count
+init $r0, 0		 #r0 = 0
+init $r1, -3	 #r1 = -2
+bez $r0			 #dead loop
