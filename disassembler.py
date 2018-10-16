@@ -112,8 +112,8 @@ for line in input_file:
         output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
     elif (line[1:5] == '0011'):  # lw: 0011
-        # Splitting the line to: P|0 0 1 1|Ry Ry|Rx
-        binaryInput = [line[0], line[1:5], line[5:7], line[7]]
+        # Splitting the line to: P|0 0 1 1|Rx|Ry Ry
+        binaryInput = [line[0], line[1:5], line[5], line[6:8]]
 
         # Disassembling it to: lw imm (unsigned)
         disassembled[0] = "lw "
@@ -130,8 +130,8 @@ for line in input_file:
         output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
     elif (line[1:5] == '0010'):  # sw: 0010
-        # Splitting the line to: P|0 0 1 0|I I I
-        binaryInput = [line[0], line[1:5], line[5:7], line[7]]
+        # Splitting the line to: P|0 0 1 0|Rx|Ry Ry
+        binaryInput = [line[0], line[1:5], line[5], line[6:8]]
 
         # Disassembling it to: sw imm (unsigned)
         disassembled[0] = "sw "
