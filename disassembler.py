@@ -18,43 +18,54 @@ print("___________")
 input_file = open("ISA_machine_code.txt", "r")
 output_file = open("ISA_assembly.txt","w")
 
-disassembled = [None] * 4
+disassembled = [""] * 5
 for line in input_file:
     if (line == "\n"):              # empty lines ignored
         continue
 
     line = line.replace("\n","")    # remove 'endline' character
     print("Instr: ", line)          # show the binary instruction to screen
-    line = line.replace(" ","")     # remove spaces anywhere in line
+    line = line[0:9].replace(" ","") + line[9:len(line)]     # remove spaces anywhere in line[0:8]
 
 
     if(line[1:3] == "10"):                # init: 10
-        #Splitting the line to: P|1 0|Rx| I I I I
-        binaryInput = [line[0], line[1:3], line[3], line[4:8]]
+        #Splitting the line to: P|1 0|I I|Rx| I I
+        binaryInput = [line[0], line[1:3], line[3:5], line[5], line[6:8]]
 
         #Disassembling it to: init imm
         disassembled[0] = "init "
-        disassembled[1] = "$" + str(int(binaryInput[2])) + ", "
-        if(binaryInput[3][0] == '1'):
-            imm = -16 + int(format(int(binaryInput[3], 2)))
+        disassembled[1] = "$" + str(int(binaryInput[3])) + ", "
+        immediate = str(binaryInput[2])+str(binaryInput[4])
+        if(immediate[0] == '1'):
+            imm = -16 + int(format(int(immediate, 2)))
             imm = str(int(imm))
         else:
-            imm = str(int(format(int(binaryInput[3], 2))))
-        disassembled[2] = imm + "\n"
-       
-        print(disassembled[0] + disassembled[1] + disassembled[2])
-        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
+            imm = str(int(format(int(immediate, 2))))
+        disassembled[2] = imm
+        if(len(line)>8):
+            if(line[8] == "#"):
+                disassembled[3] = " " + line[8:len(line)]
+            disassembled[3] = disassembled[3] + "\n"
+        else:
+            disassembled[3] = "\n"
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
     
     elif(line[1:3] == '11'):                # bez: 11
-        # Splitting the line to: P|1 0|Rx|X X X X
-        binaryInput = [line[0], line[1:3], line[3], line[4:8]]
+        # Splitting the line to: P|1 0|X X|Rx|X X
+        binaryInput = [line[0], line[1:3], line[3:5], line[5], line[6:8]]
 
         # Disassembling it to: bez imm
         disassembled[0] = "bez "
-        disassembled[1] = "$" + binaryInput[2] + "\n"
-
-        print(disassembled[0] + disassembled[1])
-        output_file.write(disassembled[0] + disassembled[1])
+        disassembled[1] = "$" + binaryInput[3] + "\n"
+        if(len(line)>8):
+            if(line[8] == "#"):
+                disassembled[2] = " " + line[8:len(line)]
+            disassembled[2] = disassembled[2] + "\n"
+        else:
+            disassembled[2] = "\n"
+        print(disassembled[0] + disassembled[1] + disassembled[2])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
 
     elif(line[1:5] == '0000'):                # add: 0000
         # Splitting the line to: P|0 0 0 0|Rx|Ry Ry
@@ -66,9 +77,15 @@ for line in input_file:
         ry = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = "$" + rx + ", "
         disassembled[2] = "$" + ry + "\n"
+        if(len(line)>8):
+            if(line[8] == "#"):
+                disassembled[3] = " " + line[8:len(line)]
+            disassembled[3] = disassembled[3] + "\n"
+        else:
+            disassembled[3] = "\n"
 
-        print(disassembled[0] + disassembled[1] + disassembled[2])
-        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
     elif (line[1:5] == '0001'):  # slt: 0001
         # Splitting the line to: P|0 0 0 1|Rx|Ry Ry
@@ -80,9 +97,15 @@ for line in input_file:
         ry = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = "$" + rx + ", "
         disassembled[2] = "$" + ry + "\n"
+        if (len(line) > 8):
+            if (line[8] == "#"):
+                disassembled[3] = " " + line[8:len(line)]
+            disassembled[3] = disassembled[3] +  "\n"
+        else:
+            disassembled[3] = "\n"
 
-        print(disassembled[0] + disassembled[1] + disassembled[2])
-        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
     elif (line[1:5] == '0011'):  # lw: 0011
         # Splitting the line to: P|0 0 1 1|Ry Ry|Rx
@@ -92,11 +115,17 @@ for line in input_file:
         disassembled[0] = "lw "
         disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + ", "
         disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2)))) + "\n"
+        if (len(line) > 8):
+            if (line[8] == "#"):
+                disassembled[3] = " " + line[8:len(line)]
+            disassembled[3] = disassembled[3] +  "\n"
+        else:
+            disassembled[3] = "\n"
 
-        print(disassembled[0] + disassembled[1] + disassembled[2])
-        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
-    elif (line[1:5] == '0010'):  # lw: 0010
+    elif (line[1:5] == '0010'):  # sw: 0010
         # Splitting the line to: P|0 0 1 0|I I I
         binaryInput = [line[0], line[1:5], line[5:7], line[7]]
 
@@ -104,9 +133,15 @@ for line in input_file:
         disassembled[0] = "sw "
         disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + ", "
         disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2)))) + "\n"
+        if (len(line) > 8):
+            if (line[8] == "#"):
+                disassembled[3] = " " + line[8:len(line)]
+            disassembled[3] = disassembled[3] +  "\n"
+        else:
+            disassembled[3] = "\n"
 
-        print(disassembled[0] + disassembled[1] + disassembled[2])
-        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
     elif (line[1:5] == '0100'):  # xor: 0100
         # Splitting the line to: P|0 1 0 0|Rx|Ry Ry
@@ -118,13 +153,19 @@ for line in input_file:
         ry = str(int(format(int(binaryInput[2], 2))))
         disassembled[1] = "$" + rx + ", "
         disassembled[2] = "$" + ry + "\n"
+        if (len(line) > 8):
+            if (line[8] == "#"):
+                disassembled[3] = " " + line[8:len(line)]
+            disassembled[3] = disassembled[3] +  "\n"
+        else:
+            disassembled[3] = "\n"
 
-        print(disassembled[0] + disassembled[1] + disassembled[2])
-        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
     elif (line[1:5] == '0101'):  # and: 0101
         # Splitting the line to: P|0 1 0 1|Rx|Ry Ry
-        binaryInput = [line[0], line[1:5], line[5], line[6:8]]
+        binaryInput = [line[0], line[1:5], line[5], line[6:8], line[8:]]
 
         # Disassembling it to: and rx, ry
         disassembled[0] = "and "
@@ -133,18 +174,32 @@ for line in input_file:
         disassembled[1] = "$" + rx + ", "
         disassembled[2] = "$" + ry + "\n"
 
-        print(disassembled[0] + disassembled[1] + disassembled[2])
-        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
+        if (len(line) > 8):
+            if (line[8] == "#"):
+                disassembled[3] = " " + line[8:len(line)]
+            disassembled[3] = disassembled[3] +  "\n"
+        else:
+            disassembled[3] = "\n"
+
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
     elif (line[1:4] == '0111'):  # srl: 0111
-        # Splitting the line to: P|0 1 1 1|Rx Rx Rx
-        binaryInput = [line[0:0], line[1:4], line[5:7]]
+        # Splitting the line to: P|0 1 1 1|X| Rx Rx
+        binaryInput = [line[0:0], line[1:5], line[5], line[6:7]]
 
         # Disassembling it to: srl rx
         disassembled[0] = "srl "
-        disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + "\n"
-        print(disassembled[0] + disassembled[1])
-        output_file.write(disassembled[0] + disassembled[1])
+        disassembled[1] = "$" + str(int(format(int(binaryInput[3], 2)))) + "\n"
+        if (len(line) > 8):
+            if (line[8] == "#"):
+                disassembled[2] = " " + line[8:len(line)]
+            disassembled[2] = disassembled[2] + "\n"
+        else:
+            disassembled[2] = "\n"
+
+        print(disassembled[0] + disassembled[1] + disassembled[2])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2])
 
     elif (line[1:5] == '0110'):  # sub: 0110
         # Splitting the line to: P|0 1 1 1|Rx|Ry|Rz
@@ -155,8 +210,15 @@ for line in input_file:
         disassembled[1] = "$" + str(binaryInput[2]) + ","
         disassembled[2] = "$" + str(binaryInput[3]) + ","
         disassembled[3] = "$" + str(binaryInput[4]) + "\n"
-        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
-        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
+        if (len(line) > 8):
+            if (line[8] == "#"):
+                disassembled[4] = " " + line[8:len(line)]
+            disassembled[4] = disassembled[4] + "\n"
+        else:
+            disassembled[4] = "\n"
+
+        print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3] + disassembled[4])
+        output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3] + disassembled[4])
 
     else:
         print("Unknown instruction:"+line)
