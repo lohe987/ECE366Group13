@@ -1,7 +1,7 @@
 #Group 13: Jessica, Jonathan, Francis
 #-----------------------------------------------------------
 
-print("ECE366 Fall 2018 Group 13's ISA Design:")
+print("ECE366 Fall 2018 Group 13's ISA Design, FJSquared:")
 print("init imm")
 print("bez imm")
 print("add rx ry")
@@ -15,8 +15,8 @@ print("halt")
 
 print("___________")
 
-input_file = open("Part 1 - Machine Code - with comments.txt", "r")
-output_file = open("ISA_assembly.txt","w")
+input_file = open("Part 2 - Machine Code - with comments.txt", "r")
+output_file = open("Part 2 - Assembly(from Machine Code) - with comments.txt","w")
 
 disassembled = [""] * 5
 for line in input_file:
@@ -209,7 +209,7 @@ for line in input_file:
         binaryInput = [line[0], line[1:5], line[5], line[6], line[7]]
 
         # Disassembling it to: sub rx, ry, rz
-        disassembled[0] = "sub"
+        disassembled[0] = "sub "
         disassembled[1] = "$r" + str(binaryInput[2]) + ","
         disassembled[2] = "$r" + str(binaryInput[3]) + ","
         disassembled[3] = "$" + str(binaryInput[4]) + "\t"
