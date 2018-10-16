@@ -187,7 +187,7 @@ for line in input_file:
         print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
         output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
 
-    elif (line[1:4] == '0111'):  # srl: 0111
+    elif (line[1:5] == '0111'):  # srl: 0111
         # Splitting the line to: P|0 1 1 1|X| Rx Rx
         binaryInput = [line[0:0], line[1:5], line[5], line[6:7]]
 
