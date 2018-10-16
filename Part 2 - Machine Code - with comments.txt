@@ -1,0 +1,174 @@
+01000010 #r0 = 2
+11010111 #r1 = 7
+00000101 #r1 = 14
+10000001 #r1 = 16
+11000000 #r0 = 0
+00010010 #0x0 = 16 maximum bms
+01000001 #r0 = 1
+01010000 #r1 = 0
+00010001 #0x1 = 0 counter
+11000110 #r0 = 6
+11010111 #r1 = 7
+00000101 #r1 = 14
+00000101 #r1 = 28
+00000101 #r1 = 56
+00000101 #r1 = 112
+00110101 #r1 - r0 = 106 = r1
+00110101 #r1 - r0 = 100 = r1
+01000010 #r0 = 2
+00010010 #0x2 = 100 number of values in print array
+11000110  #r0 = 6
+11010001 #r1 = 1
+00010010 #0x6 = 1 counter for bmc
+11001111 #r0 = 7
+11010001 #r1 = 1
+10000100 #0x7 = 8
+01011111 #r0 = 7
+00010001 #0x7 = 8
+11001111 #r0 = 7, next JUMP LOCATION!!!
+10011010 #r1 = address in 0x7
+00011101 #r2 = value in each address from array(start@0x8)
+11000011 #r0 =3
+00011000 #r0 = T
+00100010 #r2 = value in array XOR T
+11010001 #r1 = 1, shift JUMP LOCATION
+00101110 #r1 = 1 AND value from xor
+01000001 #r0 = 1
+00011110 #r3 = value in 0x1
+10000111 #r3 = r1 + r3
+10010110 #0x1 = r3
+00111100 #r2 shifted right
+01010110 #r1 = 6
+11110000 #branch to sub JUMP, jump of 6    
+11000000 #r0 = 0
+11000000 #Buffer
+01011010 #r1 = -6
+00000101 #r1 = - 6 - 6 = -12
+11110000 #branch to shift JUMP, jump of -12
+11000000 #r0 = 0, sub JUMP LOCATION
+10011010 #r1 = 16
+01000001 #r0 = 1
+00011000 #r0 = value in 0x1
+10110100 #r0 = best matching score of array element
+01011111 #r1 = 7
+00011011 #r1 = print array address stored in 0x7
+00010001 #store bms into print array address specified
+11000000 #r0 = 0
+11010001 #r1 = 1
+00010001 #0x1 = 0
+11001111 #r0 = 0x7, save JUMP LOCATION!!!
+00011000 #r0 = address stored in 0x7
+11010001 #r1 = 1
+10000001 #r1 = r0 + 1
+00010010 #0x7 = next address in print array
+01000010 #r0 = 2
+00011000 #r0 = value in 0x2
+11010001 #r1 = 1
+10110010 #r0 = r0 - 1
+11010010 #r1 = 2
+00010001 #0x2 = r0
+11010111 #r1 = 7
+11110000 #branch to check, jump of 7
+01001101 #r0 = -3
+01011010 #r1 = -6
+00000101 #r1 = -6 - 6 = -12
+00000101 #r1 = -12 - 12 = -24
+00000101 #r1 = -24 - 24 = -48
+10000001 #r1 = -48 - 3 = -51
+11000000 #r0 = 0
+11110000 #branch to next, jump of -51
+11001111 #r0 = 7 start looking at start of print array check JUMP LOCATION!!!
+11010001 #r1 = 1
+10000100 #r0 = 8
+11010111 #r1 = 7
+00010001 #0x7 = 8
+11000110 #r0 = 6
+11010111 #r1 = 7
+00000101 #r1 = 14
+00000101 #r1 = 28
+00000101 #r1 = 56
+00000101 #r1 = 112
+00110101 #r1 - r0 = 106 = r1
+00110101 #r1 - r0 = 100 = r1
+01000010 #r0 = 2
+00010010 #0x2 = 100 for loop counter
+11001111 #r0 = -1, loop JUMP LOCATION!!!
+11010010 #r1 = 2
+00011011 #r1 = value stored in 0x2
+10000100 #r0 = r1 - 1
+11010100 #r1 = 4
+00000101 #r1 = 4 + 4 = 8
+00000101 #r1 = 8 + 8 = 16
+00000101 #r1 = 16 + 16 = 32
+00000101 #r1 = 32 + 32 = 64
+11110000 #branch to end, checks if end of print array reached, jump of 64
+11000000 #Buffer
+11000000 #Buffer
+11000000 #Buffer
+01000111 #r0 = 7, compare two values loaded from array
+00011000 #r0 = array address stored in 0x7
+11010001 #r1 = 1
+10000100 #r0 = next address in array
+10011100 #r2 = array value in next address
+10110010 #r0 = previous address
+10011010 #r1 = previous value in array
+10001110 #compares r1 < r2, to see which has higher bms
+11000000 #r0 = 0
+10000100 #r0 = r1
+01010110 #r1 = 6
+00000101 #r1 = 6 + 6 = 12
+11110000 #branch to greateq, figuring out best matching score,jump of 12
+01000100 #r0 = 4
+00010100 #0x4 = r2, store the highest bms
+11000110 #r0 =6
+11010001 #r1 = 1
+00010010 #0x6 = 1, resetting bmc counter to 1
+01000001 #r0 = 1
+01010110 #r1 = 6
+00000101 #r1 = 6 + 6 = 12
+00000101 #r1 = 12 + 12 = 24
+10000001 #r1 = 24 + 1
+11110000 #branch to next2, jump of 25
+01000111 #r0 = 7, greateq JUMP LOCATION!!!
+00011000 #r0 = array address stored in 0x7
+00011000 #r0 = value in array address
+11010100 #r1 = 4
+00010001 #0x4 = r0, store highest bms
+01000111 #r0 = 7
+00011000 #r0 = array address stored in 0x7
+11010001 #r1 = 1
+10000100 #r0 = next address in array
+10011100 #r2 = array value in next address
+10110010 #r0 = previous address
+10011010 #r1 = previous value in array
+10110100 #r0 = r1 - r0
+11010100 #r1 = 4
+11110000 #branch to equal, jump 4
+11000000 #r0 = 0
+11010111 #r1 = 7
+11110000 #branch to next2, jump of 7
+11000110 #r0 = 6, equal JUMP LOCATION!!!
+00011000 #r0 = value in 0x6
+11010001 #r1 = 1
+10000100 #r0 = r1 + r0
+01010110 #r1 = 6
+00010001 #0x6 = r0, incrementing bmc
+01000100 #r0 = 4, next2 JUMP LOCATION!!!
+10011010 #r1 = value in 0x4
+01000111 #r0 = 7
+00011000 #r0 = address stored in 0x7
+00010010 #r0 address = r1
+11011000 #r1 = -4
+00000101 #r1 = -4 - 4= -8
+00000101 #r1 = -8 - 8 = -16
+00000101 #r1 = -16 - 16 = -32
+00000101 #r1 = -32 - 32 = -64
+11000000 #r0 = 0
+11110000 #branch to loop, jump of -64
+11000110 #r0 = 6, end JUMP LOCATION!!!
+00011000 #r0 = value in 0x6
+01010101 #r1 = 5
+00010001 #0x5 = r0, storing best match count
+11000000 #r0 = 0
+11011101 #r1 = -2
+11110000 #dead loop
