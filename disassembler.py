@@ -15,7 +15,7 @@ print("halt")
 
 print("___________")
 
-input_file = open("ISA_machine_code.txt", "r")
+input_file = open("Part 1 - Machine Code - with comments.txt", "r")
 output_file = open("ISA_assembly.txt","w")
 
 disassembled = [""] * 5
@@ -26,7 +26,6 @@ for line in input_file:
     line = line.replace("\n","")    # remove 'endline' character
     print("Instr: ", line)          # show the binary instruction to screen
     splitLine = line.split("#")
-    print("Length: " + str(len(splitLine)))
     if(len(splitLine) == 2):
         line = splitLine[0].replace(" ","") + "#" + splitLine[1]     # remove spaces anywhere in line[0:8]
     else:
@@ -38,14 +37,14 @@ for line in input_file:
 
         #Disassembling it to: init imm
         disassembled[0] = "init "
-        disassembled[1] = "$" + str(int(binaryInput[3])) + ", "
+        disassembled[1] = "$r" + str(int(binaryInput[3])) + ", "
         immediate = str(binaryInput[2])+str(binaryInput[4])
         if(immediate[0] == '1'):
             imm = -16 + int(format(int(immediate, 2)))
             imm = str(int(imm))
         else:
-            imm = str(int(format(int(immediate, 2))))
-        disassembled[2] = imm
+            imm = str(int(format(int(immediate, 2)))) + "\t"
+        disassembled[2] = imm + "\t"
         if(len(line)>8):
             if(line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -54,14 +53,14 @@ for line in input_file:
             disassembled[3] = "\n"
         print(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
         output_file.write(disassembled[0] + disassembled[1] + disassembled[2] + disassembled[3])
-    
+
     elif(line[1:3] == '11'):                # bez: 11
         # Splitting the line to: P|1 0|X X|Rx|X X
         binaryInput = [line[0], line[1:3], line[3:5], line[5], line[6:8]]
 
         # Disassembling it to: bez imm
         disassembled[0] = "bez "
-        disassembled[1] = "$" + binaryInput[3]
+        disassembled[1] = "$r" + binaryInput[3]+ "\t\t\t"
         if(len(line)>8):
             if(line[8] == "#"):
                 disassembled[2] = " " + line[8:len(line)]
@@ -79,8 +78,8 @@ for line in input_file:
         disassembled[0] = "add "
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = "$" + rx + ", "
-        disassembled[2] = "$" + ry
+        disassembled[1] = "$r" + rx + ", "
+        disassembled[2] = "$r" + ry+ "\t"
         if(len(line)>8):
             if(line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -99,8 +98,8 @@ for line in input_file:
         disassembled[0] = "slt "
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = "$" + rx + ", "
-        disassembled[2] = "$" + ry
+        disassembled[1] = "$r" + rx + ", "
+        disassembled[2] = "$r" + ry+ "\t"
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -117,8 +116,8 @@ for line in input_file:
 
         # Disassembling it to: lw imm (unsigned)
         disassembled[0] = "lw "
-        disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + ", "
-        disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2))))
+        disassembled[1] = "$r" + str(int(format(int(binaryInput[2], 2)))) + ", "
+        disassembled[2] = "$r" + str(int(format(int(binaryInput[3], 2))))+ "\t\t"
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -135,8 +134,8 @@ for line in input_file:
 
         # Disassembling it to: sw imm (unsigned)
         disassembled[0] = "sw "
-        disassembled[1] = "$" + str(int(format(int(binaryInput[2], 2)))) + ", "
-        disassembled[2] = "$" + str(int(format(int(binaryInput[3], 2))))
+        disassembled[1] = "$r" + str(int(format(int(binaryInput[2], 2)))) + ", "
+        disassembled[2] = "$r" + str(int(format(int(binaryInput[3], 2)))) + "\t\t"
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -155,8 +154,8 @@ for line in input_file:
         disassembled[0] = "xor "
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = "$" + rx + ", "
-        disassembled[2] = "$" + ry
+        disassembled[1] = "$r" + rx + ", "
+        disassembled[2] = "$r" + ry + "\t"
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[3] = " " + line[8:len(line)]
@@ -175,8 +174,8 @@ for line in input_file:
         disassembled[0] = "and "
         rx = str(int(format(int(binaryInput[1], 2))))
         ry = str(int(format(int(binaryInput[2], 2))))
-        disassembled[1] = "$" + rx + ", "
-        disassembled[2] = "$" + ry
+        disassembled[1] = "$r" + rx + ", "
+        disassembled[2] = "$r" + ry + "\t"
 
         if (len(line) > 8):
             if (line[8] == "#"):
@@ -194,7 +193,7 @@ for line in input_file:
 
         # Disassembling it to: srl rx
         disassembled[0] = "srl "
-        disassembled[1] = "$" + str(int(format(int(binaryInput[3], 2))))
+        disassembled[1] = "$r" + str(int(format(int(binaryInput[3], 2)))) + "\t"
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[2] = " " + line[8:len(line)]
@@ -211,9 +210,9 @@ for line in input_file:
 
         # Disassembling it to: sub rx, ry, rz
         disassembled[0] = "sub"
-        disassembled[1] = "$" + str(binaryInput[2]) + ","
-        disassembled[2] = "$" + str(binaryInput[3]) + ","
-        disassembled[3] = "$" + str(binaryInput[4])
+        disassembled[1] = "$r" + str(binaryInput[2]) + ","
+        disassembled[2] = "$r" + str(binaryInput[3]) + ","
+        disassembled[3] = "$" + str(binaryInput[4]) + "\t"
         if (len(line) > 8):
             if (line[8] == "#"):
                 disassembled[4] = " " + line[8:len(line)]
