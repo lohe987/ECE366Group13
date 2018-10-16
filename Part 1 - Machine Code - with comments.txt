@@ -1,116 +1,116 @@
 01000001 #r0 = 1
-11010010 #r1 = 2
-00010001 #0x2 = 1 <= r0
-01010101 #r1 = 5
-00010001 #holds sum of numbers for sum loop (r0 = 1 already)
-11000101 #r0 = 5
-01010011 #r1 = 3
-00010001 #0x3 = 5, loop counter for sum
+11000110 #r1 = 2
+00010100 #0x2 = 1 <= r0
+01001101 #r1 = 5
+00010100 #holds sum of numbers for sum loop (r0 = 1 already)
+11001001 #r0 = 5
+01000111 #r1 = 3
+00010100 #0x3 = 5, loop counter for sum
 01000001 #r0 = 1
 00011000 #r0 = 0x1
 11010100 #r1 = 4
-00010001 #0x4 = r0 = Q , loop counter for mod
+00010100 #0x4 = r0 = Q , loop counter for mod
 11000000 #r0 = 0
 00011000 #r0 = P
-01010110 #r1 = 6
-00010001 #0x6 = P, will be the loop counter
+01001110 #r1 = 6
+00010100 #0x6 = P, will be the loop counter
 11000000 #r0 = 0
 00011000 #r0 = Q
-01010000 #r1 = 0
+01000100 #r1 = 0
 10110100 #r1 - r0 = -Q = r0
-11010111 #r1 = 7
-00010001 #0x7 = -17 <= r0, The -17 counter
-11010111 # 7 = end JUMP DISTANCE!!!!!!!!!!!!!! 78 !!! loop JUMP LOCATION !!!
+11001111 #r1 = 7
+00010100 #0x7 = -17 <= r0, The -17 counter
+11001111 #r1 = 7 = end JUMP DISTANCE!!!!!!!!!!!!!! 78 !!! loop JUMP LOCATION !!!
 00000101 #r1 = 5 + 5 = 10
 00000101 #r1 = 10 + 10 = 20
 00000101 #r1 = 20 + 20 = 40
 00000101 #r1 = 40 + 40 = 80
-01001110 #r0 = -2
+01011010 #r0 = -2
 10000001 #r1 = 80 - 2 = 78 
-11000110 #r0 = 6
+11001010 #r0 = 6
 00011000 #r0 = P <=0x6
-11110000 #imm will be the number to reach end 78
-01010011 #r1 = 3 !!! sum JUMP LOCATION !!!
-10011001 #r0 = value in 0x3
-01010110 # 6 = number to reach mod!!!!!!!!!!!!!!!!
-00000101 # 6 + 6 = 12
+11100100 #imm will be the number to reach end 78
+01000111 #r1 = 3 !!! sum JUMP LOCATION !!!
+10011100 #r0 = value in 0x3
+01001110 #r1 = 6 = number to reach mod!!!!!!!!!!!!!!!!
+00000101 #6 + 6 = 12
 00000101 # 12 + 12 = 24
-01110000 #Jump for mod when 0x3 == 0
-01010000 # Buffer
-01010000 # Buffer
-01010000 # Buffer
-01010101 #r1 = 5
-00011011 #r1 = value of 0x5
+01100100 #Jump for mod when 0x3 == 0
+01000100 # Buffer
+01000100 # Buffer
+01000100 # Buffer
+01001101 #r1 = 5
+00011101 #r1 = value of 0x5
 01000010 #r0 = 2
 00011000 #r0 = value of 0x2
 10000100 #r0 = r0 + r1
-01010101 #r1 = 5
-00010001 #0x5 = r0
-01010011 #r1 to 3 address
-00011011 #r1 = value of 0x3 <=r1
-11001111 #r0 = -1
+01001101 #r1 = 5
+00010100 #0x5 = r0
+01000111 #r1 to 3 address
+00011101 #r1 = value of 0x3 <=r1
+11011011 #r0 = -1
 10000100 #r0 = r0 + r1
-01010011 #r1 = 3
-00010001 #0x3 = r0
-01011011 # -5 = sum JUMP DISTANCE!!!!!!!!!!! -28
+01000111 #r1 = 3
+00010100 #0x3 = r0
+01010111 # -5 = sum JUMP DISTANCE!!!!!!!!!!! -28
 00000101 #r1 = -5 - 5 = -10
 00000101 #r1 = -10 - 10 = -20
-01001000 #r0 = -8
+01010100 #r0 = -8
 10000001 #r1= r0 + r1 = - 8 - 20
 11000000 #r0 = 0
-11110000 #imm would be number to reach sum  DONE -28
-01000100 #r0 = 4, r0 to 4 address !!! mod JUMP LOCATION !!!
-01010101 #r1 = 5
-00011011 #r1 = value of 0x5
+11100100 #imm would be number to reach sum  DONE -28
+01001000 #r0 = 4, r0 to 4 address !!! mod JUMP LOCATION !!!
+01001101 #r1 = 5
+00011101 #r1 = value of 0x5
 00011000 #r0 = value of 0x4
 00001100 #r0 = r1<r0
-11010111 # 7 = smallj JUMP DISTANCE!!!!!!!!!!! 7
-11110000 #skip if r0 == 0
+11001111 # 7 = smallj JUMP DISTANCE!!!!!!!!!!! 7
+11100100 #skip if r0 == 0
 11000000 #r0 = 3
-01010101 # 6 = lower JUMP DISTANCE!!!!!!!!!!! 10
+01001101 # 6 = lower JUMP DISTANCE!!!!!!!!!!! 10
 10000111 # 6+6=12
 10000001 # r1 = 3 + 12
 11000000 # r0 = 0
-11110000 #jump to lower
-01000111 #r0 = 7, in order to reset r1 to 0 !!! smallj JUMP LOCATION !!!
-01010101 #r1 = 5
-00011011 #r1 = value of 0x5
+11100100 #jump to lower
+01001011 #r0 = 7, in order to reset r1 to 0 !!! smallj JUMP LOCATION !!!
+01001101 #r1 = 5
+00011101 #r1 = value of 0x5
 00011000 #r0 = -17
 10000100 #r0 = - 17 + r1
-01010101 #r1 = 5
-00010001 #0x5 = r0
-01010101 # -5 = mod JUMP DISTANCE!!!!!!!!!!! -26
+01001101 #r1 = 5
+00010100 #0x5 = r0
+01001101 # -5 = mod JUMP DISTANCE!!!!!!!!!!! -26
 00000101 #r1 = -5 - 5 = -10
 00000101 #r1 = -10 - 10 = -20
-11001010 #r0 = -6
+11010010 #r0 = -6
 10000001 #r1= r0 + r1 = -6 - 20
 11000000 #r0 = 0
-11110000 #imm is the number to reach mod
-11000110 #r0 = 6 !!! lower JUMP LOCATION !!!
+11100100 #imm is the number to reach mod
+11001010 #r0 = 6 !!! lower JUMP LOCATION !!!
 01011111 #r1 = -1
 00011000 #r0 = value of 0x6
 10000100 #r0 = r0 - 1
-01010110 #r1 = 6
-00010001 #0x6 = r0
-11000101 #r0 = 5
-01010011 #r1 = 3
-00010001 #0x3 = r0
+01001110 #r1 = 6
+00010100 #0x6 = r0
+11001001 #r0 = 5
+01000111 #r1 = 3
+00010100 #0x3 = r0
 00011000 #r0 = value of 0x5
-11010010 #r1 = 2
-00010001 #0x2 = r0
-11011011 # -5 = loop JUMP DISTANCE!!!!!!!!!!! -86
+11000110 #r1 = 2
+00010100 #0x2 = r0
+11010111 #r1 = -5 = loop JUMP DISTANCE!!!!!!!!!!! -86
 00000101 #r1 = -5 - 5 = -10
 00000101 #r1 = -10 - 10 = -20
 00000101 #r1 = -20 - 20 = -40
 00000101 #r1 = -40 - 40 = -80
-11001010 #r0 = -6
+11010010 #r0 = -6
 10000001 #r1 = -80 - 6 = -86 
 11000000 #r0 = 0
-11110000 #imm is number to reach loop
-11000101 #r0 5 !!! end JUMP LOCATION !!!
+11100100 #imm is number to reach loop
+11001001 #r0 = 5 !!! end JUMP LOCATION !!!
 00011000 #r0 = value of 0x5
-11010010 #r1 = 2
-00010001 #0x2 = r0
+11000110 #r1 = 2
+00010100 #0x2 = r0
 11000000 #r0 = 0 !!! exit JUMP LOCATION !!!
-11011101 #r1 = -2, back -2 instructions to loop infinite
-11110000 #imm is the number to reach exit
+11011110 #r1 = -2, back -2 instructions to loop infinite
+11100100 #imm is the number to reach exit
